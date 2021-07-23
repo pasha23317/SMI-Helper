@@ -141,6 +141,16 @@ local lec7 = imgui.ImBuffer(mainIni.lekc.lec7:gsub("&", "\n"), 4096) -- загружае
 function main() -- главная функция
 	if not isSampAvailable or not isSampfuncsLoaded() then return end
 	while not isSampAvailable() do wait(100) end
+	downloadUrlToFile(update_url, update_path, function(id, status)
+		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
+			updateIni = inicfg.load(nil, update_path) -- Получаем таблицу ини с гитхаба
+			if tonumber(updateIni.info.vers) > script_vers then -- Если версия с гитхаба больше, чем версия в коде скрипта то
+				sampAddChatMessage("Есть обновление скрипта. Версия: " .. updateIni.info.vers_text, -1)
+				update_state = true
+			end
+			os.remove(update_path)
+		end
+	end)
 	repeat
 		wait(0)
     until sampIsLocalPlayerSpawned()
@@ -164,16 +174,6 @@ function main() -- главная функция
 	sobes = nooltext -- присваиваем текстовому полю пустое значение
 	lekc = nooltext -- присвоим нулевое значение
 	
-	downloadUrlToFile(update_url, update_path, function(id, status)
-		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
-			updateIni = inicfg.load(nil, update_path) -- Получаем таблицу ини с гитхаба
-			if tonumber(updateIni.info.vers) > script_vers then -- Если версия с гитхаба больше, чем версия в коде скрипта то
-				sampAddChatMessage("Есть обновление скрипта. Версия: " .. updateIni.info.vers_text, -1)
-				update_state = true
-			end
-			os.remove(update_path)
-		end
-	end)
 	
 	while true do -- пока истина то
 		wait(0) -- ждем 0 мсек
