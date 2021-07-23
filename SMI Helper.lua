@@ -27,8 +27,8 @@ local mymsg = {}
 
 -- ДЛЯ ОБНОВЛЕНИЯ СКРИПТА
 update_state = false
-local script_vers = 2 -- Версия скрипта
-local script_vers_text = "1.05" -- Текстовая версия скрипта, для оповещения пользователя
+local script_vers = 1 -- Версия скрипта
+local script_vers_text = "0.38" -- Текстовая версия скрипта, для оповещения пользователя
 
 local update_url = "https://raw.githubusercontent.com/pasha23317/SMI-Helper/main/update.ini" -- ссылка на ини файл
 local update_path = getWorkingDirectory() .. "/update.ini"
@@ -37,7 +37,7 @@ local script_url = "https://raw.githubusercontent.com/pasha23317/SMI-Helper/main
 local script_path = thisScript().path
 -- КОНЕЦ ПЕРЕМЕННЫХ ОБНОВЛЕНИЯ
 
-local tag = "{FF1493}[SMI Helper] {FFD700}SMI Helper v." .. script_vers_text .. " запущен" -- при запуске скрипта будет этот текст
+local tag = "{FFFFFF}[{FF1493}SMI Helper{FFFFFF}] SMI Helper v." .. script_vers_text .. " запущен" -- при запуске скрипта будет этот текст
 
 
 -- Эфиры
@@ -167,10 +167,10 @@ function main() -- главная функция
 		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 			updateIni = inicfg.load(nil, update_path) -- Получаем таблицу ини с гитхаба
 			if tonumber(updateIni.info.vers) > script_vers then -- Если версия с гитхаба больше, чем версия в коде скрипта то
-				sampAddChatMessage("Есть обновление скрипта. Версия: " .. updateIni.info.vers_text, -1)
+				sampAddChatMessage("{FFFFFF}[{FF1493}SMI Helper{FFFFFF}] Есть обновление скрипта. Версия: " .. updateIni.info.vers_text, -1)
 				update_state = true
 			else
-				sampAddChatMessage("Обновления для скрипта не требуются.", -1)
+				sampAddChatMessage("{FFFFFF}[{FF1493}SMI Helper{FFFFFF}] Обновления для скрипта не требуются.", -1)
 			end
 			os.remove(update_path)
 		end
@@ -180,7 +180,7 @@ function main() -- главная функция
 		if update_state then -- сли есть обновление и update_state = true, то скачивается файл
 			downloadUrlToFile(script_url, script_path, function(id, status)
 				if status == dlstatus.STATUS_ENDDOWNLOADDATA then
-					sampAddChatMessage("Скрипт успешно обновлен!", -1)
+					sampAddChatMessage("{FFFFFF}[{FF1493}SMI Helper{FFFFFF}] Скрипт успешно обновлен!", -1)
 					lua_thread.create(function()
 						wait(300)
 						thisScript():reload() -- Перезапустит скрипт с новой версией
@@ -234,7 +234,7 @@ function split(str, delim, plain) -- функция фипа, которая сделала биндер рабочи
     return tokens
 end
 function cmd_tt(arg)
-	sampAddChatMessage("Версия - 1.05", -1)
+	sampAddChatMessage("Версия - 0.38", -1)
 end
 function cmd_fwarn(arg)
 	if doljnost ~= "Нет" then 
