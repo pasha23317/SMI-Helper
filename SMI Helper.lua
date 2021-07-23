@@ -148,6 +148,7 @@ function main() -- главная функция
 		wait(3000)
 		sampSendChat('/stats')
 	end)
+	sampAddChatMessage(tag, -1) -- отправляем в чат запрузку скрипта
 	sampRegisterChatCommand("shelp", cmd_imgui) -- рега команды shelp
 	sampRegisterChatCommand("mb", cmd_members) -- рега команды mb
 	sampRegisterChatCommand("jp", cmd_jp) -- рега команды jp
@@ -160,7 +161,6 @@ function main() -- главная функция
 	sampRegisterChatCommand("shr", cmd_shr) -- рега команды shr
 	sampRegisterChatCommand("tt", cmd_tt)
 	imgui.Process = true -- процесс окна imgui, окна друг от друга не зависят
-	sampAddChatMessage(tag, -1) -- отправляем в чат запрузку скрипта
 	sobes = nooltext -- присваиваем текстовому полю пустое значение
 	lekc = nooltext -- присвоим нулевое значение
 	
@@ -180,8 +180,12 @@ function main() -- главная функция
 		if update_state then -- сли есть обновление и update_state = true, то скачивается файл
 			downloadUrlToFile(script_url, script_path, function(id, status)
 				if status == dlstatus.STATUS_ENDDOWNLOADDATA then
-					sampAddChatMessage("Скрипт успешно обновлен!", -1)
-					thisScript():reload() -- Перезапустит скрипт с новой версией
+					lua_thread.create(function()
+						sampAddChatMessage("Скрипт успешно обновлен!", -1)
+						wait(200)
+						thisScript():reload() -- Перезапустит скрипт с новой версией
+						wait(200)
+					end)
 				end
 			end)
 			break
@@ -230,7 +234,7 @@ function split(str, delim, plain) -- функция фипа, которая сделала биндер рабочи
     return tokens
 end
 function cmd_tt(arg)
-	sampAddChatMessage("Версия - 1.01", -1)
+	sampAddChatMessage("Версия - 1.05", -1)
 end
 function cmd_fwarn(arg)
 	if doljnost ~= "Нет" then 
