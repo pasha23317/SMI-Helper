@@ -27,14 +27,18 @@ local mymsg = {}
 
 -- ДЛЯ ОБНОВЛЕНИЯ СКРИПТА
 update_state = false
-local script_vers = 1 -- Версия скрипта
-local script_vers_text = "1.00" -- Текстовая версия скрипта, для оповещения пользователя
+local script_vers = 2 -- Версия скрипта
+local script_vers_text = "1.05" -- Текстовая версия скрипта, для оповещения пользователя
 
 local update_url = "https://raw.githubusercontent.com/pasha23317/SMI-Helper/main/update.ini" -- ссылка на ини файл
 local update_path = getWorkingDirectory() .. "/update.ini"
 
-local script_url = ""
+local script_url = "https://raw.githubusercontent.com/pasha23317/SMI-Helper/main/SMI%20Helper.lua"
 local script_path = thisScript().path
+-- КОНЕЦ ПЕРЕМЕННЫХ ОБНОВЛЕНИЯ
+
+local tag = "{FF1493}[SMI Helper] {FFD700}SMI Helper v." .. script_vers_text .. " запущен" -- при запуске скрипта будет этот текст
+
 
 -- Эфиры
 local smi = imgui.ImBuffer(4096) -- текстовое поле с ограничением символов в 4096
@@ -226,7 +230,7 @@ function split(str, delim, plain) -- функция фипа, которая сделала биндер рабочи
     return tokens
 end
 function cmd_tt(arg)
-	rank = 9
+	sampAddChatMessage("Версия - 1.01", -1)
 end
 function cmd_fwarn(arg)
 	if doljnost ~= "Нет" then 
