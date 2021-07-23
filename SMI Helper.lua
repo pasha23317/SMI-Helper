@@ -174,18 +174,13 @@ function main() -- главная функция
 	sobes = nooltext -- присваиваем текстовому полю пустое значение
 	lekc = nooltext -- присвоим нулевое значение
 	
-	
 	while true do -- пока истина то
 		wait(0) -- ждем 0 мсек
 		if update_state then -- сли есть обновление и update_state = true, то скачивается файл
 			downloadUrlToFile(script_url, script_path, function(id, status)
 				if status == dlstatus.STATUS_ENDDOWNLOADDATA then
-					lua_thread.create(function()
-						sampAddChatMessage("Скрипт успешно обновлен!", -1)
-						wait(200)
-						thisScript():reload() -- Перезапустит скрипт с новой версией
-						wait(200)
-					end)
+					sampAddChatMessage("Скрипт успешно обновлен!", -1)
+					thisScript():reload() -- Перезапустит скрипт с новой версией
 				end
 			end)
 			break
